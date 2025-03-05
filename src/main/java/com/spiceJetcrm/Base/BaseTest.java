@@ -9,11 +9,13 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.spiceJetcrm.utils.Testutils;
+
 public class BaseTest {
-	static WebDriver driver;
-	static Properties prop;
+	public static WebDriver driver;
+	public static Properties prop;
 	
-	public BaseTest() throws IOException {
+	public BaseTest() {
 		try {
 			prop = new Properties();
 			FileInputStream ip = new FileInputStream("D:\\testProjects\\SeleniumProj1\\src\\main\\java\\com\\spiceJetcrm\\config\\config.properties");
@@ -21,7 +23,9 @@ public class BaseTest {
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public static void initialization() {
@@ -36,8 +40,8 @@ public class BaseTest {
 		}
 		
 		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Testutils.Page_Load));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Testutils.implicit_wait));
 		
 		driver.get(prop.getProperty("url"));
 	}
